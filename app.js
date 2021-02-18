@@ -12,12 +12,12 @@ document.getElementById('search-field').addEventListener('keypress', function (e
   }
 });
 
-const getImages = (query) => {
+function getImages(query) {
   toggleSpinner();
   fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
     .then(data => showImages(data.hits))
-    .catch(error => displayError(error))
+    .catch(error => displayError(error));
 }
 
 let sliders = [];
@@ -52,10 +52,10 @@ const selectItem = (event, img) => {
     sliders.splice(item, 1);
   }
 }
-var timer
+var timer 
 function createSlider() {
   // check slider image length
-  if (sliders.length < 2) {
+  if (sliders.length < 2 && duration === -1) {
     alert('Select at least 2 image.');
     return;
   }
@@ -73,6 +73,12 @@ function createSlider() {
   // hide image aria
   imagesArea.style.display = 'none';
   const duration = document.getElementById('doration').value || 1000;
+  let hideDiv = document.getElementById('hide');
+  if(duration < 0){
+    alert('Warning! You Cannot Provide Any Nagetive Value. Ex: -1000');
+    hideDiv.classList.add('d-none');
+    return;
+  }
   sliders.forEach(slide => {
     let item = document.createElement('div');
     item.className = "slider-item";
@@ -81,6 +87,7 @@ function createSlider() {
     alt="">`;
     sliderContainer.appendChild(item);
   });
+  
 
   changeSlide(0);
   timer = setInterval(function () {
@@ -101,6 +108,7 @@ const changeSlide = (index) => {
   if (index < 0) {
     slideIndex = items.length - 1;
     index = slideIndex;
+    
   };
 
   if (index >= items.length) {
