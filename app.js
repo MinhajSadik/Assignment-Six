@@ -55,7 +55,7 @@ const selectItem = (event, img) => {
 var timer 
 function createSlider() {
   // check slider image length
-  if (sliders.length < 2 && duration === -1) {
+  if (sliders.length < 2) {
     alert('Select at least 2 image.');
     return;
   }
@@ -75,9 +75,9 @@ function createSlider() {
   const duration = document.getElementById('doration').value || 1000;
   let hideDiv = document.getElementById('hide');
   if(duration < 0){
-    alert('Warning! You Cannot Provide Any Nagetive Value. Ex: -1000');
+    alert('Warning! You Cannot Provide Any Nagetive Value. Ex:1000');
     hideDiv.classList.add('d-none');
-    return;
+    return false;
   }
   sliders.forEach(slide => {
     let item = document.createElement('div');
